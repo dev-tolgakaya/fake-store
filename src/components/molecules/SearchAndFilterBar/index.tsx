@@ -184,7 +184,6 @@ export default function SearchAndFilterBar({
                 onChange={(option) => setFieldValue("sort", option?.value)}
                 styles={selectThemeStyles}
                 isSearchable={false}
-                menuPortalTarget={null}
                 menuPosition="absolute"
               />
             </SelectWrapper>
@@ -195,7 +194,6 @@ export default function SearchAndFilterBar({
                 value={categoryOptions.find((o) => o.value === values.category)}
                 onChange={(option) => setFieldValue("category", option?.value)}
                 isSearchable={false}
-                menuPortalTarget={document.body}
                 menuPosition="fixed"
                 styles={{
                   ...selectThemeStyles,
