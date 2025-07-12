@@ -7,6 +7,8 @@ import { Formik, Form, Field, useFormikContext } from "formik";
 import { useEffect } from "react";
 import { onlyNumberReplace } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
+import Select from "react-select";
+import { useTheme } from "styled-components";
 
 type Props = {
   initialSearch: string;
@@ -44,14 +46,9 @@ const StyledInput = styled.input`
   }
 `;
 
-const StyledSelect = styled.select`
-  padding: 0.6rem 0.75rem;
-  border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.input.border};
-  font-size: 0.95rem;
-  background: ${({ theme }) => theme.input.background};
-  color: ${({ theme }) => theme.input.text};
+const SelectWrapper = styled.div`
   width: 100%;
+  position: relative;
 
   @media (min-width: 768px) {
     width: 20%;
@@ -89,6 +86,44 @@ export default function SearchAndFilterBar({
 }: Props) {
   const router = useRouter();
   const { t } = useTranslation("common");
+  const theme = useTheme();
+
+  const categoryOptions = categories.map((cat) => ({
+    label: cat,
+    value: cat,
+  }));
+  categoryOptions.unshift({ label: t("search.allCategories"), value: "" });
+
+  const sortOptions = [
+    { label: t("search.sortAsc"), value: "asc" },
+    { label: t("search.sortDesc"), value: "desc" },
+  ];
+
+  const selectThemeStyles = {
+    control: (styles: any) => ({
+      ...styles,
+      backgroundColor: theme.input.background,
+      borderColor: theme.input.border,
+      color: theme.input.text,
+    }),
+    menu: (styles: any) => ({
+      ...styles,
+      zIndex: 10,
+      backgroundColor: theme.input.background,
+      color: theme.input.text,
+    }),
+    option: (styles: any, { isFocused }: any) => ({
+      ...styles,
+      backgroundColor: isFocused
+        ? theme.secondaryBgHover
+        : theme.input.background,
+      color: theme.input.text,
+    }),
+    singleValue: (styles: any) => ({
+      ...styles,
+      color: theme.input.text,
+    }),
+  };
 
   return (
     <Formik
@@ -141,18 +176,34 @@ export default function SearchAndFilterBar({
                 setFieldValue("maxPrice", onlyNumberReplace(e.target.value))
               }
             />
-            <Field as={StyledSelect} name="sort">
-              <option value="asc">{t("search.sortAsc")}</option>
-              <option value="desc">{t("search.sortDesc")}</option>
-            </Field>
-            <Field as={StyledSelect} name="category">
-              <option value="">{t("search.allCategories")}</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </Field>
+
+            <SelectWrapper>
+              <Select
+                options={sortOptions}
+                value={sortOptions.find((o) => o.value === values.sort)}
+                onChange={(option) => setFieldValue("sort", option?.value)}
+                styles={selectThemeStyles}
+                isSearchable={false}
+                menuPortalTarget={null}
+                menuPosition="absolute"
+              />
+            </SelectWrapper>
+
+            <SelectWrapper>
+              <Select
+                options={categoryOptions}
+                value={categoryOptions.find((o) => o.value === values.category)}
+                onChange={(option) => setFieldValue("category", option?.value)}
+                isSearchable={false}
+                menuPortalTarget={document.body}
+                menuPosition="fixed"
+                styles={{
+                  ...selectThemeStyles,
+                  menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                }}
+              />
+            </SelectWrapper>
+
             <Button type="submit">{t("search.searchBtn")}</Button>
             <Button
               type="button"

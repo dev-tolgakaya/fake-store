@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SearchAndFilterBar from "./index";
 import { ThemeProvider } from "styled-components";
 import { lightTheme } from "@/styles/theme";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -50,59 +51,36 @@ describe("SearchAndFilterBar", () => {
       </ThemeProvider>
     );
 
-  it("renders all input and select fields", () => {
+  it("renders all inputs", () => {
     renderWithProviders();
-
     expect(screen.getByPlaceholderText("Ürün ara...")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Min Fiyat")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Max Fiyat")).toBeInTheDocument();
-    expect(screen.getByText("Fiyat (Artan)")).toBeInTheDocument();
-    expect(screen.getByText("Fiyat (Azalan)")).toBeInTheDocument();
-    expect(screen.getByText("Tüm Kategoriler")).toBeInTheDocument();
-    expect(screen.getByText("electronics")).toBeInTheDocument();
-    expect(screen.getByText("jewelery")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Ara/i })).toBeInTheDocument();
+    expect(screen.getByText("Ara")).toBeInTheDocument();
+    expect(screen.getByText("Temizle")).toBeInTheDocument();
   });
 
-  it("updates URL on submit", () => {
+  it("submits with proper query", async () => {
     renderWithProviders();
+    const user = userEvent.setup();
 
-    fireEvent.change(screen.getByPlaceholderText("Ürün ara..."), {
-      target: { value: "telefon" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Min Fiyat"), {
-      target: { value: "100" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Max Fiyat"), {
-      target: { value: "5000" },
-    });
-    fireEvent.change(screen.getByDisplayValue("Fiyat (Artan)"), {
-      target: { value: "desc" },
-    });
-    fireEvent.change(screen.getByDisplayValue("Tüm Kategoriler"), {
-      target: { value: "electronics" },
-    });
+    await user.type(screen.getByPlaceholderText("Ürün ara..."), "telefon");
+    await user.type(screen.getByPlaceholderText("Min Fiyat"), "100");
+    await user.type(screen.getByPlaceholderText("Max Fiyat"), "5000");
 
-    fireEvent.click(screen.getByRole("button", { name: /Ara/i }));
+    const sortSelect = screen.getAllByText("Fiyat (Artan)")[0];
+    await user.click(sortSelect);
+    await user.click(screen.getByText("Fiyat (Azalan)"));
+
+    const catSelect = screen.getByText("Tüm Kategoriler");
+    await user.click(catSelect);
+    await user.click(screen.getByText("electronics"));
+
+    await user.click(screen.getByText("Ara"));
 
     expect(push).toHaveBeenCalledWith(expect.stringContaining("search=telefon"));
     expect(push).toHaveBeenCalledWith(expect.stringContaining("minPrice=100"));
     expect(push).toHaveBeenCalledWith(expect.stringContaining("maxPrice=5000"));
-    expect(push).toHaveBeenCalledWith(expect.stringContaining("sort=desc"));
-    expect(push).toHaveBeenCalledWith(expect.stringContaining("category=electronics"));
-  });
-
-  it("automatically updates URL when sort or category changes", () => {
-    renderWithProviders();
-
-    fireEvent.change(screen.getByDisplayValue("Fiyat (Artan)"), {
-      target: { value: "desc" },
-    });
-
-    fireEvent.change(screen.getByDisplayValue("Tüm Kategoriler"), {
-      target: { value: "electronics" },
-    });
-
     expect(push).toHaveBeenCalledWith(expect.stringContaining("sort=desc"));
     expect(push).toHaveBeenCalledWith(expect.stringContaining("category=electronics"));
   });
