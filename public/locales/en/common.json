@@ -1,0 +1,29 @@
+{
+  "itemAdded": "Item added to cart!",
+  "cart": {
+    "title": "Your Cart",
+    "description": "View or edit the items in your cart.",
+    "backToProducts": "Back to Products",
+    "empty": "Your cart is currently empty.",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "total": "Total",
+    "clear": "Clear Cart"
+  },
+  "product": {
+    "back": "Back to Products",
+    "addToCart": "Add to Cart",
+    "rating": "Rating"
+  },
+  "search": {
+    "searchPlaceholder": "Search product...",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "sortAsc": "Price (Ascending)",
+    "sortDesc": "Price (Descending)",
+    "allCategories": "All Categories",
+    "searchBtn": "Search",
+    "clearBtn": "Clear"
+  },
+  "no_products_found": "No products matched your criteria."
+}

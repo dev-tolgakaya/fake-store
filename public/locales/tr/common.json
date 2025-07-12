@@ -1,0 +1,29 @@
+{
+  "itemAdded": "Ürün sepete eklendi!",
+  "cart": {
+    "title": "Sepetiniz",
+    "description": "Sepetinizdeki ürünleri görüntüleyin veya düzenleyin.",
+    "backToProducts": "Ürünlere Geri Dön",
+    "empty": "Sepetiniz şu anda boş.",
+    "quantity": "Miktar",
+    "remove": "Kaldır",
+    "total": "Toplam",
+    "clear": "Sepeti Temizle"
+  },
+  "product": {
+    "back": "Ürünlere Geri Dön",
+    "addToCart": "Sepete Ekle",
+    "rating": "Puan"
+  },
+  "search": {
+    "searchPlaceholder": "Ürün ara...",
+    "minPrice": "Min Fiyat",
+    "maxPrice": "Max Fiyat",
+    "sortAsc": "Fiyat (Artan)",
+    "sortDesc": "Fiyat (Azalan)",
+    "allCategories": "Tüm Kategoriler",
+    "searchBtn": "Ara",
+    "clearBtn": "Temizle"
+  },
+  "no_products_found": "Aradığınız kriterlere uygun ürün bulunamadı."
+}

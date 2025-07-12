@@ -1,0 +1,81 @@
+export const lightTheme = {
+  text: "#111",
+  buttonBg: "#f44336",
+  buttonHoverBg: "#d32f2f",
+  buttonText: "#fff",
+  secondaryBg: "#f0f0f0",
+  secondaryBgHover: "#e0e0e0",
+  secondaryText: "#333",
+  tertiaryText: "#0070f3",
+  cartIconColor: "#111",
+  cartBadgeBg: "red",
+  cartBadgeText: "#fff",
+  logoColor: "#111",
+  logoHover: "#555",
+  pagination: {
+    border: "#ddd",
+    activeBg: "#0099ff",
+    activeText: "#fff",
+    inactiveBg: "#fff",
+    inactiveText: "#333",
+  },
+  productCard: {
+    background: "#fff",
+    border: "#ddd",
+    title: "#333",
+    price: "#0099ff",
+    ratingBg: "rgba(255, 255, 255, 0.85)",
+    ratingText: "#444",
+  },
+  input: {
+    background: "#fff",
+    border: "#ccc",
+    text: "#000",
+  },
+  background: {
+    primary: "#ffffff",
+    secondary: "#ededee",
+  },
+};
+
+export const darkTheme = {
+  text: "#f5f5f5",
+  buttonBg: "#ff6b6b",
+  buttonHoverBg: "#ff4c4c",
+  buttonText: "#fff",
+  secondaryBg: "#2a2a2a",
+  secondaryBgHover: "#3a3a3a",
+  secondaryText: "#ccc",
+  tertiaryText: "#6ca0ff",
+  cartIconColor: "#f0f0f0",
+  cartBadgeBg: "#ff6b6b",
+  cartBadgeText: "#fff",
+  logoColor: "#fff",
+  logoHover: "#bbb",
+  pagination: {
+    border: "#555",
+    activeBg: "#007acc",
+    activeText: "#fff",
+    inactiveBg: "#222",
+    inactiveText: "#ccc",
+  },
+  productCard: {
+    background: "#1e1e1e",
+    border: "#333",
+    title: "#eee",
+    price: "#66ccff",
+    ratingBg: "rgba(30, 30, 30, 0.85)",
+    ratingText: "#ccc",
+  },
+  input: {
+    background: "#2b2b2b",
+    border: "#444",
+    text: "#eee",
+  },
+  background: {
+    primary: "#121212",
+    secondary: "#1e1e1e",
+  },
+};
+
+export type ThemeType = typeof lightTheme;
